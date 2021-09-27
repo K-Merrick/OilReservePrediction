@@ -1,2 +1,21 @@
 # OilReservePrediction
-Project to predict the oil reserves in well and chose best location for future wells.
+OilyGiant is a mining company that is looking to dig a new well. The company has collected data on the oil quality and volume of reserves in different regions. Based on this information, we are tasked with building a model for predicting the volume of reserves in new wells, determining which oil wells have the highest estimated values, and identifying the region with the higest potential for profit.
+
+**Conclusion**: The goal of this project was to build a model for predicting the volume of oil well reserves in various regions and, on the basis of the results, determine which region offers the highest potential for profit. In carrying out this task, we trained linear regression models on 75 percent of the data for each region and validated the results on the final 25 percent. We then took the top 200 wells for each region, according to the algorithms' predictions, and calculated the profit generated from each. Based on these calculations, Region 1 appeared to be the most lucrative region, as the top 200 wells generated the greatest profit.
+
+To verify these results, we used the bootstrapping technique. In doing so, we took 1000 samples of 500 wells from each region, then calculated the profit from the top 200 wells from each region (again, based on the predicted values). We then calculated the mean profit, risk percentage, and confidence interval for the profit from each region. Interestingly, when using the bootstrapping technique we found that Region 2 generates the highest average profit, as opposed to Region 1. We believe that the reson behind this finding lies in the accuracy of our linear regression algorithms. Recall that we obtained the following scores for the algorithms:
+
+    Region 1: RMSE - 37.58 | R^2 - .2799
+
+    Region 2: RMSE - 00.89 | R^2 - .9996
+
+    Region 3: RMSE - 40.03 | R^2 - .2052
+
+As can be seen, there is a far greater standard deviation for residuals for Region 1 and Region 3 models than the Region 2 model. Additionally, the R^2 score for the Region 2 model is better, by a large margin, than the scores for the other models; given the R^2 score for Region 2's model, we can conclude that the model is able to explain almost all the variance of the dependent variable in terms of the variances of the independent variables. We found that this is most likely due to there being a strong correlation between Region 2's product values and its 'f2' values, which we did not find with Region 1's and Region 3's values.
+
+Given the above values, we believe that bootstrapping provides us with a more accurate view of the potential profits for opening wells in the varios regions. Prior to bootstrapping, our results depended on finding the top 200 well values for each region based on the predicted values from a validation dataset with 25,000 datapoints. Given this large sample size, the top 200 samples found for each region were very likely to have included many wells from the upper bound of wells in each region. By bootstrapping, we limited our sample size to 500 for each sample, with replacement; as such, it was less likely that the same top 200 wells from our previous analysis would be included in a sample. Overall, we believe that bootstrapping provided us with a more accurate overview of the estimated profit for developing 200 wells in each region.
+
+As part of this investigation, we were instructed to calculate the potential risk involved with developing 200 wells in each region based on our bootstrapping results; on the basis of these calculations, we were instructed to only consider developing wells in regions with a risk of loss lower than 2.5%. Since both Region 1 and Region 3 have an approximately 6% potential for loss, the only viable region left is Region 2.
+
+Based on these findings alone, we would recommend that OilyGiant chose Region 2 to develop its next wells in. That being said, we believe that it's important for OilyGiant to investigate why the product values for Region 2 appear to be grouped, as opposed to data points for the other regions. We think that it would be best if this analysis were rerun on datasets for each region that have the same product formats - that it, either the values are grouped for all or not. Without understanding exactly how the product values for Region 2 were recorded, we cannot fully endorse the results of this investigation.
+ 
